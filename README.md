@@ -1,3 +1,6 @@
+# UPDATE
+It now works. As mentioned in the commit message from https://chromium-review.googlesource.com/c/chromium/src/+/4968438, the worker inherits storage access at creation time, as such it is required to `requestStorageAccess` before the worker creation.
+
 # Reproduction steps
 ## Environment
 - Chrome: Version 120.0.6099.18 (Official Build) beta (x86_64)

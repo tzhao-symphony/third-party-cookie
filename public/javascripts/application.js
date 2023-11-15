@@ -3,10 +3,16 @@ import { setCookie, getCookie } from './apis/api.js';
 import { initWorker } from './worker/startWorker.js';
 
 const requestStorageAccessButton = document.getElementById('requestAccess');
+const setCookiesFromWorkerButton = document.getElementById('setCookiesFromWorker');
+const getCookiesFromWorkerButton = document.getElementById('getCookiesFromWorker');
+let resolveGrantAccess;
 
-initWorker();
 bindButtonActions();
-handleCookieAccess();
+handleCookieAccess().then(() => {
+  initWorker();
+  setCookiesFromWorkerButton.removeAttribute('disabled');
+  getCookiesFromWorkerButton.removeAttribute('disabled');
+});
 
 function bindButtonActions() {
     document.getElementById('setCookies').onclick = async () => {
@@ -17,11 +23,11 @@ function bindButtonActions() {
         getCookie().then(printResult);
     }
     
-    document.getElementById('setCookiesFromWorker').onclick = async () => {
+    setCookiesFromWorkerButton.onclick = async () => {
         setCookieFromWorker().then(printResult);
     }
     
-    document.getElementById('getCookiesFromWorker').onclick = async () => {
+    getCookiesFromWorkerButton.onclick = async () => {
         getCookieFromWorker().then(printResult);
     }
     
@@ -34,6 +40,7 @@ function bindButtonActions() {
             console.error(`Error obtaining storage access: ${err}.
                           Please sign in.`);
           }
+        resolveGrantAccess();
     }
 }
 
@@ -62,7 +69,8 @@ async function handleCookieAccess() {
             doThingsWithCookies();
           } else if (permission.state === "prompt") {
             // Need to call requestStorageAccess() after a user interaction
-            requestStorageAccessButton.style.display = 'block'
+            requestStorageAccessButton.style.display = 'block';
+            return new Promise(r => resolveGrantAccess = r);
           } else if (permission.state === "denied") {
             // User has denied unpartitioned cookie access, so we'll
             // need to do something else
