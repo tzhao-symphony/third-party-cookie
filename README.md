@@ -26,4 +26,6 @@ yarn start
 - [embed] Click on "Get Cookies" > the unpartitioned cookie should be displayed
 - [embed] Click on "Get Cookies from worker" > no cookie is displayed, the unpartitioned cookie was not embedded in the request that came from the worker
 
+https://github.com/tzhao-symphony/third-party-cookie/assets/78357406/54701183-6285-4038-b34e-efa096ed9704
+
 
