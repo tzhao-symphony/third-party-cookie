@@ -1,0 +1,11 @@
+extends layout
+
+block content 
+    a(href='/', target='_blank') Open app in new tab (1st Party)
+    button#setCookies Set Cookies
+    button#getCookies Get Cookies
+    button#setCookiesFromWorker Set Cookies from worker
+    button#getCookiesFromWorker Get Cookies from worker 
+    button#requestAccess(style="display:none;") Request Storage Access 
+    div#result
+    script(src="/javascripts/application.js", type="module")
